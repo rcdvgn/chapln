@@ -25,7 +25,7 @@ body,
     --foreground-sec: #1e2033;
     --foreground-ter: #3d3f5c;
 
-    --text-light: #9798aa;
+    --subtext: #9798aa;
     --text: #ffffff;
 
     --like: #fc0e63;
@@ -35,6 +35,10 @@ body,
     --average-yellow: #ffe500;
     --bad-red: #ff0000;
     --good-green: #15ff00;
+
+    --header-height: 6rem;
+
+    --picture-md: 2.5rem;
   }
 }
 

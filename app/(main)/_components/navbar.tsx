@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import {
   HomeIcon,
   ExploreIcon,
@@ -10,10 +13,10 @@ import {
   AddIcon,
 } from "../../icons";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Navbar() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const currentPage = usePathname();
 
   const [isWatchlistsExpanded, setIsWatchlistsExpanded] = useState(true);
   const [isClubsExpanded, setIsClubsExpanded] = useState(true);
@@ -27,20 +30,22 @@ export default function Navbar() {
 
   const hide = isNavbarExpanded ? "" : "!hidden";
 
-  const navbarIconWrapperStyle = `flex items-center justify-center ${
-    isNavbarExpanded ? "gap-3 flex-row" : "gap-1 flex-col"
+  const navbarIconWrapperStyle = `cursor-pointer flex items-center justify-center group ${
+    isNavbarExpanded
+      ? "gap-4 flex-row h-[35px] px-[14px]"
+      : "gap-1 flex-col h-[45px]"
   }`;
 
   const navPageIcons = [
     {
       icon: <HomeIcon className="navbarIcon" />,
-      label: "Feed",
-      linkTo: "/",
+      label: "Home",
+      linkTo: "/home",
     },
     {
       icon: <ExploreIcon className="navbarIcon" />,
-      label: "Search",
-      linkTo: "/search",
+      label: "Explore",
+      linkTo: "/explore",
     },
   ];
 
@@ -79,9 +84,10 @@ export default function Navbar() {
   ];
 
   const currentUser = {
-    pic: "https://img.freepik.com/free-photo/portrait-young-woman-with-natural-make-up_23-2149084942.jpg",
-    name: "Emma Hayashi",
-    handle: "nocap_emma",
+    pictureUrl:
+      "https://img.uefa.com/imgml/TP/players/3/2024/324x324/63706.jpg",
+    name: "Cristiano Ronaldo",
+    handle: "arab_ronaldo",
     isVerified: true,
   };
 
@@ -92,8 +98,34 @@ export default function Navbar() {
   return (
     <div
       onClick={expandNav}
-      className={`flex flex-col ${isNavbarListExpanded ? "px-6" : "px-2"}`}
+      className={`pb-4 flex flex-col gap-8 ${
+        isNavbarListExpanded ? "px-6" : "px-2"
+      }`}
     >
+      <div className="grid items-center h-header-height mb-[-1.5rem]">
+        <div
+          className={`flex align-center justify-center gap-2 rounded-full py-1 ${
+            isNavbarExpanded ? "pl-1 pr-6" : ""
+          }`}
+        >
+          <div className="h-picture-md w-picture-md cursor-pointer rounded-full">
+            <img
+              src={currentUser.pictureUrl}
+              alt="Your profile picture"
+              className="rounded-full"
+            />
+          </div>
+          <div className={`mt-0.5 ${hide}`}>
+            <div className="text-white text-sm font-bold">
+              {currentUser.name}
+            </div>
+            <div className="text-subtext text-xs font-medium">
+              @{currentUser.handle}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr className="navbarHr" />
       <div
         className={`flex flex-col gap-8 ${
           isNavbarExpanded ? "items-start" : "items-center"
@@ -101,33 +133,37 @@ export default function Navbar() {
       >
         {navPageIcons.map((page, i) => {
           return (
-            <div className={navbarIconWrapperStyle}>
+            <Link href={page.linkTo} className={navbarIconWrapperStyle}>
               <div
                 className={`[&_svg]:w-[20px] ${
-                  currentPage === i
-                    ? "[&_svg]:fill-accent"
+                  currentPage === page.linkTo
+                    ? "[&_svg]:fill-white"
                     : "[&_svg]:fill-foreground-ter"
-                } `}
+                } group-hover:[&_svg]:fill-white`}
               >
                 {page.icon}
               </div>
               <div
-                className={`${
+                className={`group-hover:text-white ${
                   isNavbarExpanded
                     ? "text-lg font-semibold"
                     : "text-xs font-medium"
-                } ${currentPage === i ? "text-accent" : "text-foreground-ter"}`}
+                } ${
+                  currentPage === page.linkTo
+                    ? "text-white"
+                    : "text-foreground-ter"
+                }`}
               >
                 {page.label}
               </div>
-            </div>
+            </Link>
           );
         })}
         <hr className="navbarHr" />
         {navListIcons.map((list, i) => {
           return (
             <div className={navbarIconWrapperStyle}>
-              <div className={"[&_svg]:w-[20px] [&_svg]:fill-foreground-ter"}>
+              <div className="[&_svg]:w-[20px] [&_svg]:fill-foreground-ter group-hover:[&_svg]:fill-white">
                 {list.icon}
               </div>
               <div
@@ -135,7 +171,7 @@ export default function Navbar() {
                   isNavbarExpanded
                     ? "text-lg font-semibold"
                     : "text-xs font-medium"
-                }`}
+                } group-hover:text-white`}
               >
                 {list.label}
               </div>

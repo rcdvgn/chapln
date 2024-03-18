@@ -17,7 +17,7 @@ const config: Config = {
         "foreground-sec": "var(--foreground-sec)",
         "foreground-ter": "var(--foreground-ter)",
 
-        "text-light": "var(--text-light)",
+        subtext: "var(--subtext)",
         text: "var(--text)",
 
         like: "var(--like)",
@@ -29,7 +29,8 @@ const config: Config = {
         "good-green": "var(--good-green)",
       },
       spacing: {
-        "header-height": "4.375",
+        "header-height": "var(--header-height)",
+        "picture-md": "var(--picture-md)",
       },
     },
   },
