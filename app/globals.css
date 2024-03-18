@@ -2,32 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --accent: #c100d6;
+
+    --background: #060609;
+
+    --foreground-pri: #11111c;
+    --foreground-sec: #1e2033;
+    --foreground-ter: #3d3f5c;
+
+    --text-light: #9798aa;
+    --text: #ffffff;
+
+    --like: #fc0e63;
+    --comment: #0ea6fc;
+    --repost: #0efc5f;
+
+    --average-yellow: #ffe500;
+    --bad-red: #ff0000;
+    --good-green: #15ff00;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+@layer components {
+  .main {
+    @apply h-full w-full flex bg-foreground-pri;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .navbarHr {
+    @apply h-[1px] bg-foreground-sec border-0 outline-0 w-full my-[-0.5rem];
+  }
+
+  .navbarIcon {
+    @apply fill-foreground-ter;
   }
 }
